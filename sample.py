@@ -8,7 +8,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 
 # ⚠️ Page config MUST be first Streamlit call
-st.set_page_config(page_title="KMTEC Chatbot", page_icon="🤖", layout="centered")
+st.set_page_config(page_title=" Chatbot", page_icon="🤖", layout="centered")
 
 # Load environment variables
 load_dotenv()
@@ -59,8 +59,8 @@ prompt = PromptTemplate(
 )
 
 # Streamlit UI
-st.title("🤖 KMTEC Chatbot")
-st.markdown("Ask questions about **KMTEC Ltd**. The bot will only answer based on the company documents.")
+st.title("🤖 Chatbot")
+st.markdown("Ask questions")
 
 # Input box
 question = st.text_input("💬 Enter your question:")
