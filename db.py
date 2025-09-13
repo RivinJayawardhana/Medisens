@@ -1,6 +1,5 @@
-# create_vector_db_from_pdfs.py
-
 import os
+import glob
 import pickle
 from typing import List
 
@@ -66,12 +65,18 @@ def load_vector_db(input_path="faiss_store_pdfs.pkl"):
     return vectorstore
 
 
-def create_vector_db_from_pdfs(pdf_paths, output_path="faiss_store_pdfs.pkl"):
+def create_vector_db_from_folder(pdf_folder: str, output_path="faiss_store_pdfs.pkl"):
     """
-    Full pipeline: load PDFs → split → embed → save vector DB.
+    Full pipeline: load all PDFs in folder → split → embed → save vector DB.
     """
-    print("📄 Loading PDF documents...")
-    pdf_docs = load_pdfs(pdf_paths)
+    print(f"📂 Scanning folder {pdf_folder} for PDFs...")
+    pdf_files = glob.glob(os.path.join(pdf_folder, "*.pdf"))
+
+    if not pdf_files:
+        raise ValueError(f"No PDF files found in folder: {pdf_folder}")
+
+    print(f"📄 Found {len(pdf_files)} PDF(s). Loading documents...")
+    pdf_docs = load_pdfs(pdf_files)
 
     if not pdf_docs:
         raise ValueError("No documents were loaded from the provided PDFs.")
@@ -87,8 +92,6 @@ def create_vector_db_from_pdfs(pdf_paths, output_path="faiss_store_pdfs.pkl"):
 
 # Example usage
 if __name__ == "__main__":
-    # Replace with your local PDF file paths
-    pdf_files = ["./sample.pdf"]
-    vectorstore = create_vector_db_from_pdfs(pdf_files)
-
-   
+    # Replace with your local PDF folder path
+    pdf_folder = "./pdf"  # <-- folder containing multiple PDFs
+    vectorstore = create_vector_db_from_folder(pdf_folder, "faiss_store_pdfs.pkl")
